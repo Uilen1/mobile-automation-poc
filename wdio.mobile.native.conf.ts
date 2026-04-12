@@ -16,7 +16,15 @@ export const config = {
     waitforTimeout: 10000,
     connectionRetryTimeout: 120000,
     connectionRetryCount: 3,
-    services: [],
+        services: [
+        ['appium', {
+            command: 'appium',
+            args: { 
+                address: '127.0.0.1',
+                port: 4723,
+            }
+        }]
+    ],
     framework: 'mocha',
     reporters: ['spec', ['allure', { outputDir: 'allure-results' }]],
     mochaOpts: {
