@@ -288,12 +288,12 @@ appium-inspector
 ### **📱 Testes Chrome Mobile (Android)**
 **Arquivo:** `test/specs/chrome.mobile.test.e2e.ts`  
 **Configuração:** `wdio.chrome.mobile.standalone.conf.ts`  
-**Status:** ⚠️ Conectando - Ajuste de seletores necessário
+**Status:** ✅ 2/2 Passando
 
 | Teste | Descrição | Problema |
 |-------|-----------|----------|
-| Open Homepage | Abre Google mobile | Seletor desatualizado ⚠️ |
-| Mobile Search | Busca no mobile | Google mobile DOM diferente ⚠️ |
+| Open Homepage | Abre Google mobile | Página carrega ✅ |
+| Mobile Search | Busca no mobile | "WebDriverIO" encontrado ✅ |
 
 **Nota:** A estrutura DOM do Google mobile é diferente do desktop. Use Appium Inspector para obter os seletores corretos.
 
