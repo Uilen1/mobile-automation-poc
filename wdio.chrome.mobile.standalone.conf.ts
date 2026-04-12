@@ -18,7 +18,16 @@ export const config = {
     waitforTimeout: 10000,
     connectionRetryTimeout: 120000,
     connectionRetryCount: 3,
-    services: [],
+    services: [
+        ['appium', {
+            command: 'appium',
+            args: {
+                address: '127.0.0.1',
+                port: 4723,
+                allowInsecure: '*:chromedriver_autodownload'
+            }
+        }]
+    ],
     framework: 'mocha',
     reporters: ['spec', ['allure', { outputDir: 'allure-results' }]],
     mochaOpts: {
@@ -31,6 +40,9 @@ export const config = {
         'appium:platformVersion': '14',
         'appium:automationName': 'UiAutomator2',
         'appium:browserName': 'Chrome',
-        'appium:autoGrantPermissions': true
+        'appium:autoGrantPermissions': true,
+        'appium:chromeOptions': {
+            w3c: false
+        }
     }]
 };

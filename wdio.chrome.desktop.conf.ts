@@ -7,7 +7,7 @@
 export const config = {
     runner: 'local',
     tsConfigPath: './tsconfig.json',
-    specs: ['./test/specs/chrome.test.e2e.ts'],
+    specs: ['./test/specs/chrome.web.test.e2e.ts'],
     exclude: [],
     maxInstances: 1,
     logLevel: 'silent',

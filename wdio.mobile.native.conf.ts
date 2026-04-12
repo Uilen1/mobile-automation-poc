@@ -8,7 +8,7 @@ export const config = {
     runner: 'local',
     tsConfigPath: './tsconfig.json',
     port: 4723,
-    specs: ['./test/specs/test.e2e.ts'],
+    specs: ['./test/specs/app.clock.test.e2e.ts'],
     exclude: [],
     maxInstances: 10,
     logLevel: 'silent',

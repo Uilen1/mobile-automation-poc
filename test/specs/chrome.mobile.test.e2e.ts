@@ -2,6 +2,7 @@ import { expect } from '@wdio/globals';
 import MobileChromePage from '../pageobjects/mobile.chrome.page';
 
 describe('Mobile Chrome Browser - Android Web Tests', () => {
+
     before(async () => {
         console.log('🔧 Setting up mobile Chrome browser suite...');
         await MobileChromePage.open();
@@ -13,14 +14,19 @@ describe('Mobile Chrome Browser - Android Web Tests', () => {
     });
 
     it('should open Google homepage on mobile Chrome', async () => {
-        await MobileChromePage.searchInput.waitForDisplayed({ timeout: 10000 });
-        const title = await browser.getTitle();
-        expect(title).toContain('Google');
+        await MobileChromePage.acceptCookiesIfPresent();
+
+        const inputExists =
+            await MobileChromePage.searchInput.isExisting() ||
+            await MobileChromePage.searchInputFallback.isExisting();
+
+        expect(inputExists).toBeTruthy();
     });
 
     it('should search for WebDriverIO on mobile Chrome', async () => {
         await MobileChromePage.searchFor('WebDriverIO');
+
         const title = await browser.getTitle();
-        expect(title).toContain('WebDriverIO');
+        expect(title.toLowerCase()).toContain('webdriverio');
     });
 });

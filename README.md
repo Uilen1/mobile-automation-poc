@@ -209,7 +209,7 @@ rm -rf allure-results allure-report
 |------|--------|----------|
 | Mobile Native | ✅ PASSOU | 4/4 testes |
 | Chrome Desktop | ✅ PASSOU | 2/2 testes |
-| Chrome Mobile | ⚠️ CONECTANDO | Requer ajuste de seletores |
+| Chrome Mobile | ✅ PASSOU | 2/2 testes |
 
 ## 🔍 Guia de Depuração
 

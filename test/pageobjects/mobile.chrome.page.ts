@@ -1,23 +1,45 @@
 import Page from './page';
 
-/**
- * Mobile Chrome page object
- * Reusable selectors and actions for Chrome within Android emulador.
- */
 class MobileChromePage extends Page {
+
     public get searchInput() {
+        return $('textarea[name="q"]');
+    }
+
+    public get searchInputFallback() {
         return $('input[name="q"]');
     }
 
-    public get resultsContainer() {
-        return $('#search');
+    public get acceptCookiesBtn() {
+        return $('//button[contains(.,"Aceitar") or contains(.,"Accept")]');
+    }
+
+    public async acceptCookiesIfPresent() {
+        if (await this.acceptCookiesBtn.isExisting()) {
+            await this.acceptCookiesBtn.click();
+        }
     }
 
     public async searchFor(query: string) {
-        await this.searchInput.waitForDisplayed({ timeout: 10000 });
-        await this.searchInput.setValue(query);
-        await browser.keys(['Enter']);
-        await this.resultsContainer.waitForDisplayed({ timeout: 15000 });
+        await this.acceptCookiesIfPresent();
+
+        let input = await this.searchInput;
+
+        if (!(await input.isExisting())) {
+            input = await this.searchInputFallback;
+        }
+
+        await input.waitForDisplayed({ timeout: 10000 });
+        await input.click();
+        await input.setValue(query);
+
+        // Melhor forma no mobile
+        await browser.keys('Enter');
+
+        // espera algo confiável (título muda)
+        await browser.waitUntil(async () => {
+            return (await browser.getTitle()).toLowerCase().includes(query.toLowerCase());
+        }, { timeout: 15000 });
     }
 
     public open() {
