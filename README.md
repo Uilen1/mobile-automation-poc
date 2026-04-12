@@ -72,16 +72,30 @@ adb version
 }
 ```
 
+### **Capabilities Chrome Browser**
+
+```typescript
+{
+  browserName: 'chrome',
+  'goog:chromeOptions': {
+    args: ['--window-size=1280,720']
+  }
+}
+```
+
 ### **Estrutura do Projeto**
 
 ```
 mobile-automation-poc/
 ├── test/
 │   ├── pageobjects/
-│   │   └── clock.page.ts      # Page Object para o app Clock
+│   │   ├── clock.page.ts      # Page Object para o app Clock
+│   │   └── google.page.ts     # Page Object para testes de navegador Chrome
 │   └── specs/
-│       └── test.e2e.ts        # Casos de teste E2E
-├── wdio.conf.ts               # Configuração WebDriverIO
+│       ├── test.e2e.ts        # Casos de teste E2E mobile
+│       └── chrome.test.e2e.ts # Casos de teste E2E no navegador Chrome
+├── wdio.conf.ts               # Configuração WebDriverIO para Appium móvel
+├── wdio.chrome.conf.ts        # Configuração WebDriverIO para testes Chrome browser
 ├── package.json               # Dependências e scripts
 ├── tsconfig.json              # Configuração TypeScript
 └── README.md                  # Este arquivo
@@ -114,6 +128,13 @@ mobile-automation-poc/
 npm run wdio
 # ou
 npx wdio run wdio.conf.ts
+```
+
+#### **Executar Testes no Chrome Browser**
+```bash
+npm run wdio:chrome
+# ou
+npx wdio run wdio.chrome.conf.ts
 ```
 
 #### **Executar Testes com Filtro (por arquivo)**
