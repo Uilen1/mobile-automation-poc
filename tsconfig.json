@@ -26,6 +26,9 @@
     },
     "include": [
         "test",
-        "wdio.conf.ts"
+        "wdio.conf.ts",
+        "wdio.chrome.desktop.conf.ts",
+        "wdio.chrome.mobile.standalone.conf.ts",
+        "wdio.mobile.native.conf.ts"
     ]
 }
