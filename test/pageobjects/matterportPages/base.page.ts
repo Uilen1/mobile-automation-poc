@@ -135,7 +135,12 @@ class BasePage {
         )
     }
 
-    protected async isElementSelected(element: ReturnType<typeof $>): Promise<boolean> {
+    public async selectMenuOptionByText(optionText: string): Promise<void> {
+        const optionElement = this.getElementByText(optionText);
+        await optionElement.click();
+    }
+
+    public async isElementSelected(element: ReturnType<typeof $>): Promise<boolean> {
         const resolvedElement = await element
         const selectedAttribute = await resolvedElement.getAttribute('selected').catch(() => null)
 
@@ -149,7 +154,7 @@ class BasePage {
     /**
      * Ensures an accessibility-id element is selected. If not selected, clicks it and validates selected=true.
      */
-    protected async ensureAccessibilityElementSelected(
+    public async ensureAccessibilityElementSelected(
         accessibilityId: string,
         timeoutMs = this.DEFAULT_TIMEOUT
     ): Promise<boolean> {

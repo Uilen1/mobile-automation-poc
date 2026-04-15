@@ -1,6 +1,7 @@
 import { expect } from '@wdio/globals'
 import LoginPage from '../pageobjects/matterportPages/login.page'
 import ProjectsPage from '../pageobjects/matterportPages/projects.page'
+import spacesPage from '../pageobjects/matterportPages/spaces.page'
 
 
 
@@ -29,6 +30,13 @@ describe('Matterport Application - Mobile Automation Tests', () => {
             const projectsOptionSelected = await ProjectsPage.ensureProjectsOptionSelected()
             expect(projectsOptionSelected).toBe(true)
             await ProjectsPage.firstAccessValidation()
+        })
+
+
+        it('should validate the first project in the spaces directory', async () => {
+            const spacesOptionSelected = await spacesPage.ensureSpacesOptionSelected()
+            expect(spacesOptionSelected).toBe(true)
+            await spacesPage.validateFirstProjectInSpacesDirectory();
         })
     })
 })
