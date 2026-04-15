@@ -1,3 +1,5 @@
+import allureReporter from '@wdio/allure-reporter'
+
 /**
  * Configuration for Mobile Native Tests (Clock App)
  * Port: 4723 (Appium)
@@ -31,6 +33,16 @@ export const config = {
         ui: 'bdd',
         timeout: 180000
     },
+    afterTest: async function (
+        test: { title: string },
+        _context: unknown,
+        result: { error?: Error }
+    ) {
+        const screenshot = await browser.takeScreenshot()
+        const label = result.error ? `FAILED: ${test.title}` : test.title
+        allureReporter.addAttachment(label, Buffer.from(screenshot, 'base64'), 'image/png')
+    },
+
     capabilities: [{
         platformName: 'Android',
         'appium:deviceName': 'RQ8R70G7AJD',

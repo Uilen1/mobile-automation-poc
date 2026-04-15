@@ -23,7 +23,9 @@ describe('Matterport Application - Mobile Automation Tests', () => {
          * Currently just logs completion, can be extended for cleanup operations
          */
         afterEach(async function () {
-            console.log(`✅ Test completed: ${this.currentTest?.title}`)
+            const state = this.currentTest?.state ?? 'unknown'
+            const icon = state === 'failed' ? '❌' : '✅'
+            console.log(`${icon} Test ${state}: ${this.currentTest?.title}`)
         })
 
         it('should verify the welcome message is displayed', async () => {
