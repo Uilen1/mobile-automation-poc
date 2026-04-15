@@ -29,13 +29,14 @@ export const config = {
     reporters: ['spec', ['allure', { outputDir: 'allure-results' }]],
     mochaOpts: {
         ui: 'bdd',
-        timeout: 60000
+        timeout: 180000
     },
     capabilities: [{
         platformName: 'Android',
         'appium:deviceName': 'RQ8R70G7AJD',
         'appium:platformVersion': '13',
         'appium:automationName': 'UiAutomator2',
+        'appium:autoGrantPermissions': true,
         'appium:appPackage': 'com.matterport.android.capture'
     }]
 };

@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "wdio:mobile": "wdio run ./wdio.mobile.native.conf.ts",
+    "wdio:mobile-matterport": "wdio run ./wdio.mobile.matterport.conf.ts",
     "wdio:chrome-desktop": "wdio run ./wdio.chrome.desktop.conf.ts",
     "wdio:chrome-mobile": "wdio run ./wdio.chrome.mobile.standalone.conf.ts"
   },

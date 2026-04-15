@@ -1,5 +1,8 @@
 import { expect } from '@wdio/globals'
-import ClockPage from '../pageobjects/clock.page'
+import LoginPage from '../pageobjects/matterportPages/login.page'
+import ProjectsPage from '../pageobjects/matterportPages/projects.page'
+
+
 
 describe('Matterport Application - Mobile Automation Tests', () => {
 
@@ -10,6 +13,7 @@ describe('Matterport Application - Mobile Automation Tests', () => {
  */
         before(async () => {
             console.log('🔧 Setting up test suite:')
+            await LoginPage.login('lellesmoreira9@gmail.com');
             console.log('✅ Setup complete: Starting tests for Matterport app')
         })
 
@@ -22,15 +26,9 @@ describe('Matterport Application - Mobile Automation Tests', () => {
         })
 
         it('should verify the welcome message is displayed', async () => {
-            const timeVisible = await ClockPage.isTimeDisplayVisible()
-            expect(timeVisible).toBe(true)
-        })
-
-        it('should get the current time from the clock', async () => {
-            const time = await ClockPage.getDisplayedTime()
-            expect(time).toBeDefined()
-            expect(time?.length).toBeGreaterThan(0)
-            console.log(`🕐 Current time displayed: ${time}`)
+            const projectsOptionSelected = await ProjectsPage.ensureProjectsOptionSelected()
+            expect(projectsOptionSelected).toBe(true)
+            await ProjectsPage.firstAccessValidation()
         })
     })
 })
