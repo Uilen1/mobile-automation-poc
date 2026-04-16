@@ -185,7 +185,8 @@ class BasePage {
                     await element.touchAction('tap')
                 }
                 clickCount++
-                await browser.pause(Math.max(intervalMs, 400))
+                console.log(`[clickWhileVisible] END | selector: "${selector}" | total clicks: ${clickCount} | polls: ${pollCount}`)
+                return clickCount
 
             } catch (err) {
                 console.log(`[clickWhileVisible] Poll #${pollCount} | ERROR: ${(err as Error).message}`)
