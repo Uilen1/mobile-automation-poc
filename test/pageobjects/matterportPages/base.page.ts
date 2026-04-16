@@ -36,6 +36,15 @@ class BasePage {
         return element;
     }
 
+    protected getElementByXpath(xpath: string) {
+        const element = $(xpath);
+        element.waitForDisplayed({
+            timeout: this.DEFAULT_TIMEOUT,
+            timeoutMsg: `Element with xpath "${xpath}" should be visible within ${this.DEFAULT_TIMEOUT / 1000} seconds`
+        });
+        return element;
+    }
+
     protected getElementByText(text: string) {
         const element = $(`//android.widget.TextView[@text="${text}"]`);
         element.waitForDisplayed({
@@ -52,6 +61,79 @@ class BasePage {
             timeoutMsg: `Element with resource id "${resourceId}" should be visible within ${this.DEFAULT_TIMEOUT / 1000} seconds`
         });
         return element;
+    }
+
+    protected getElementById(resourceId: string) {
+        const element = $(`id=${resourceId}`);
+        element.waitForDisplayed({
+            timeout: this.DEFAULT_TIMEOUT,
+            timeoutMsg: `Element with id "${resourceId}" should be visible within ${this.DEFAULT_TIMEOUT / 1000} seconds`
+        });
+        return element;
+    }
+
+    protected getElementBySelector(selector: string) {
+        const element = $(selector);
+        element.waitForDisplayed({
+            timeout: this.DEFAULT_TIMEOUT,
+            timeoutMsg: `Element with selector "${selector}" should be visible within ${this.DEFAULT_TIMEOUT / 1000} seconds`
+        });
+        return element;
+    }
+
+    protected async clickElementById(resourceId: string): Promise<void> {
+        await this.getElementById(resourceId).click()
+    }
+
+    protected async clickElementBySelector(selector: ReturnType<typeof $>): Promise<void> {
+        await selector.click()
+    }
+
+    /**
+     * Scrolls down the page to make lower elements visible.
+     * Uses swipe gesture to scroll smoothly on mobile devices.
+     * @param scrollDistance - Distance to scroll in pixels (default: 500)
+     */
+    protected async scrollDown(scrollDistance: number = 500): Promise<void> {
+        const windowSize = await browser.getWindowSize()
+        const startX = windowSize.width / 2
+        const startY = windowSize.height * 0.8
+        const endY = startY - scrollDistance
+
+        await browser.performActions([
+            {
+                type: 'pointer',
+                id: 'finger',
+                parameters: { pointerType: 'touch' },
+                actions: [
+                    { type: 'pointerMove', duration: 0, x: startX, y: startY },
+                    { type: 'pointerDown', button: 0 },
+                    { type: 'pointerMove', duration: 500, x: startX, y: endY },
+                    { type: 'pointerUp', button: 0 }
+                ]
+            }
+        ])
+    }
+
+    /**
+     * Dismisses the on-screen keyboard if it is open.
+     * Falls back silently if the keyboard is not present.
+     */
+    protected async hideKeyboard(): Promise<void> {
+        try {
+            await driver.hideKeyboard()
+        } catch {
+            // keyboard was not open, nothing to do
+        }
+    }
+
+    protected async setInputValueById(resourceId: string, value: string): Promise<void> {
+        const input = this.getElementById(resourceId)
+        await this.scrollDown()
+        await input.click()
+        await input.clearValue()
+        await input.setValue(value)
+        await this.hideKeyboard()
     }
 
     /**
@@ -131,6 +213,13 @@ class BasePage {
     public async skipOnboardingIfPresent(timeoutMs = this.DEFAULT_TIMEOUT): Promise<number> {
         return await this.clickWhileVisible(
             'id=com.matterport.android.capture:id/button_skip_onboarding',
+            timeoutMs
+        )
+    }
+
+    public async clickElementIfPresent(selector: string, timeoutMs = this.DEFAULT_TIMEOUT): Promise<number> {
+        return await this.clickWhileVisible(
+            selector,
             timeoutMs
         )
     }
